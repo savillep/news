@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>                                                                                       
+<classpath>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+        <attributes>
+            <attribute name="module" value="true"/>
+        </attributes>
+    </classpathentry>
+    <classpathentry kind="src" path="src/main/java"/>
+    <classpathentry kind="src" path="src/test/java"/>
+    <classpathentry kind="lib" path="src/lib"/>
+    <classpathentry kind="output" path="bin"/>
+</classpath>
+
+<!-- 
+    Sample values used in the classpath setting
+    src     - setting source folders path
+    lib     - setting jar files path
+    output  - setting path for generating class files from the source files.
+
+    For Example
+    Project Name: HelloWorld
+    FQDN: /myJavaProjects/HelloWorld
+    ../HelloWorld
+        ./.classpath
+        ./.project
+        ./src/main/java/
+        ./src/test/java/
+        ./src/test/java/com/myCompany/sample/hello.java     (package sample)
+        ./bin
+        ./bin/test/hello.class
+        
+    do not include package names in the path, they will be created
+    when the ?builder? compiles the .java files to .class
+
+    set environment CLASSPATH variable:
+    export CLASSPATH=/myJavaProjects:$CLASSPATH
+    
+    can now refer to project as 
+        $ java HelloWorld.Hello
+
+    YouCompleteMe will now work with no errors...
+
+    An example of excluding certain files from the build path
+	<classpathentry excluding="StageA.java|StageB.java|StageC.java" kind="src" path="src"/>
+-->

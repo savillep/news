@@ -1,0 +1,12 @@
+echo "Select an  option: "
+select item in item1 item2 item3
+do
+    if [[ -n $item ]]; then
+        item=$item
+        echo "You have selected $item"
+        break
+    else
+        echo "BAD Choice!"
+    fi
+done
+

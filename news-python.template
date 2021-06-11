@@ -1,0 +1,23 @@
+# -----------------------------------------------------------------------------
+# Maintainer:   Peter Saville   
+# Contact:      
+# 
+# Description:
+#
+# Change Log:
+# Created: <date>
+# Modified:
+# -----------------------------------------------------------------------------
+
+def main():
+    print("You need to change this")
+
+
+if __name__ == "__main__":
+    main()
+
+
+class NewClass:
+    def __init__(self):
+        self.name = "NewClass"
+

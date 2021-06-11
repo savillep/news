@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This is the minimal project configuration (combined with .classpath) that
+  allow JDT LS to fully work with a trivial eclipse project.
+  Specification:
+     https://help.eclipse.org/oxygen/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fmisc%2Fproject_description_file.html
+-->
+<projectDescription>
+  <name>REPLACE_ME</name>
+  <comment></comment>
+  <projects>
+      <project>REPLACE_ME</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javaBuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javaNature</nature>
+  </natures>
+</projectDescription>

@@ -1,0 +1,138 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# Maintainer:  Peter Saville
+# Contact:      
+# 
+# Description:
+# A trivial script to template new scripts with basic header info.  It requires
+# the news.template file to be in the same dir as the news script.
+# Default behaviour is for bash scripts.
+# > The AddMenus and Options and Basic are all variations of bash scripts
+# > C Template
+# > Java Template
+#       default class name to the file name
+#       if the .classpath and .project files don't exist, create them
+#
+# 180903: Added options to allow creation of scripts that take options
+#         and/or have a menu interface.  The basic template is always added
+#         even though it is currently an option
+# 200323: Added basic java template
+# 200823: Add some python script options
+# TODO: The code needs to be refactored now as additional functions have been 
+#       added in an ad hoc way and is a bit shite...
+# ------------------------------------------------------------------------------
+
+VERSION=0.3.0
+USAGE="Usage: news [-m] [-o] [-b] [-h] [-c] [-j] [-J] [-p] SCRIPTNAME"
+SPATH=$(which news)
+TEMPLATEPATH=${SPATH%/*}
+
+fileNameFormat () {
+    # Check if dot notation has been used and get the root word
+    # ie the left hand side
+    if [[ $CTEMPLATE ]] || [[ $JAVATEMPLATE ]] || [[ $PYTHONTEMPLATE ]]; then
+        FILENAME=${1%.*}
+    fi
+
+    # Add the suffix for C and Java and capitalise the first letter of the
+    # of the Java file name
+    if [[ $CTEMPLATE ]]; then
+        FILENAME=$FILENAME.c
+    elif [[ $JAVATEMPLATE ]]; then
+        # Capitalise the first letter of a java class name
+        FILENAME=$(tr [:lower:] [:upper:] <<< ${FILENAME:0:1})${FILENAME:1}
+        FILENAME=$FILENAME.java
+    elif [[ $PYTHONTEMPLATE ]]; then
+        FILENAME=$FILENAME.py
+    fi
+}
+
+# Using the -J option will create a basic eclipse Java project directory
+# structure and create the .classpath and .project files
+makeJavaProject () {
+    JAVAPROJECTNAME=$1
+    mkdir -p $JAVAPROJECTNAME/{bin,src,lib}
+    cp "$TEMPLATEPATH/news-java-dotclass" $JAVAPROJECTNAME/.classpath
+    cp "$TEMPLATEPATH/news-java-dotproject" $JAVAPROJECTNAME/.project
+    #replace the .project project name placeholders with actual project name
+    sed -i 's/REPLACE_ME/'$JAVAPROJECTNAME'/g' $JAVAPROJECTNAME/.project
+}
+
+
+while getopts "mobhcjJp" opt
+do
+        case $opt in
+                m) ADDMENUS=1 ;;
+                o) ADDOPTIONS=1 ;;
+                b) ADDBASIC=1 ;;
+                h) SHOWHELP=1;;
+                c) CTEMPLATE=1;;
+                j) JAVATEMPLATE=1;;
+                J) JAVAPROJECTTEMPLATE=1;;
+                p) PYTHONTEMPLATE=1;;
+                *) echo $USAGE; exit 2
+        esac
+done
+
+# Remove the options from the argument list
+shift $((OPTIND -1))
+
+# Ensure that one argument has been passed, ie new script name
+# and display the help if not
+if [ $# == 0 ] && ! [ $SHOWHELP ] ; then
+    echo $USAGE;
+    exit 3;
+elif [ $SHOWHELP ] ; then
+    echo $USAGE;
+    cat $TEMPLATEPATH/help-news.txt;
+    exit 4;
+fi
+# if its to create the java project skeleton
+if [[ $JAVAPROJECTTEMPLATE ]]; then
+    makeJavaProject $1;
+    echo Java Project Framework Created...;
+    # This will change the dir if you source the script rather than
+    # execute the script in a subshell ( source news -J ... | . news -J ...
+    cd $1/src;
+    #exit
+fi
+if ! [[ $JAVAPROJECTTEMPLATE ]]; then 
+    # If the file already exists, just open it in ViM
+    if [ -f $1 ] ; then
+        vim $1
+    else
+        # Format the file name if a C or Java or Python template
+        FILENAME=$1
+        fileNameFormat $FILENAME 
+        # TODO this needs to be changed! Garbage code now...
+        if  ! [[ $CTEMPLATE ]] && ! [[ $JAVATEMPLATE ]] && ! [[ $PYTHONTEMPLATE ]]; then
+            # Build the new bash script based on the options...
+            cat "$TEMPLATEPATH/news-basic.template" >> $1
+            if (( $ADDOPTIONS )); then 
+                sed -i '/^USAGE/d' $1       #Remove the USAGE from basic template
+                cat "$TEMPLATEPATH/news-options.template" >> $1
+            fi
+            if (( $ADDMENUS )); then 
+                cat "$TEMPLATEPATH/news-menus.template" >> $1
+            fi
+            chmod u+x $1
+        elif  [[ $CTEMPLATE ]];  then
+            cat "$TEMPLATEPATH/news-c.template" >> $FILENAME
+        elif [[ $PYTHONTEMPLATE ]]; then
+            cat "$TEMPLATEPATH/news-python.template" >> $FILENAME
+            CLASS=${FILENAME%.*}
+            sed -i 's/NewClass/'$CLASS'/' $FILENAME
+        elif [[ $JAVATEMPLATE ]]; then
+            cat "$TEMPLATEPATH/news-java.template" >> $FILENAME
+            # Change the class name to the file name
+            CLASS=${FILENAME%.*}
+            sed -i 's/NewClass/'$CLASS'/' $FILENAME
+        fi
+        #The double quotes is important as $(date) will return a string with spaces
+        sed -i "s/<date>/$(date)/" $FILENAME
+        vim $FILENAME
+        #echo ctemplate = $CTEMPLATE
+        #echo javatemplate = $JAVATEMPLATE
+    fi
+fi
+

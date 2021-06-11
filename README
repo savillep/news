@@ -1,0 +1,27 @@
+This script 'news' is a template for new scripts
+Just a quick way to create a new script with some prefilled information and
+open in your text editor of choice - ViM...
+
+I use it by creating a symbolic link to the script in $USER/bin and a hard
+link to the template file in the same directory.
+
+TODO: Create options for different templates
+        - template for script with no options   DONE
+        - template for script with options      DONE
+        - for Java Projects:
+            Create the eclipse .project file    DONE
+            Create the eclipse .classpath file      DONE
+            Create the basic src and bin directory structure    DONE
+            Update CLASSPATH environment variable? (.bashrc)
+            * This is to enable ViM YCM plugin eclipse LSP to work
+              properly.
+        - create a python file template
+
+DONE:
+190903      Added options:  Template script options
+190914      Added the help option to describe the options
+
+191019      Added a very basic template for C programs - use -c option
+200323      Added a very basic template for Java classes - use -j option
+200515      Added basic Java project framework template - use -J option
+            Modified Java .java class template to now update the class name

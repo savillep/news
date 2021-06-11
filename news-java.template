@@ -1,0 +1,26 @@
+// -----------------------------------------------------------------------------
+// Maintainer:   Peter Saville   
+// Contact:      
+// 
+// Description:
+//
+//
+// Change Log:
+// Created: <date>
+// Modified:
+// -----------------------------------------------------------------------------
+
+//package 
+
+//import java.io.*;
+
+public class NewClass {
+    
+    public NewClass () {
+    
+    }
+
+    public static void main (String[] args) {
+
+    }
+}

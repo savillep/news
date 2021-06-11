@@ -1,0 +1,14 @@
+--- news Options ---
+-m                 Add a template for adding menus to your bash script
+-o                 Add a template for adding options to your bash script
+-b                 Not really needed.  This option is always added regardless if
+                     you specify it or not
+-h                 Show this help file
+-c                 Create a very basic C program template
+-j                 Create a very basic Java Class template
+-J <DIR_NAME>      Create a basic eclipse Java project structure with 
+                     ./<DIR_NAME>
+                         .project 
+                         .classpath
+                         /src
+                         /bin

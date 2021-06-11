@@ -1,0 +1,15 @@
+USAGE="script [-a] [-b ARG] [-c ARG]"
+
+while getopts "ab:c:" opt
+do      
+case $opt in
+    a) VAR1=1 ;;
+    b) VAR2="opt $OPTARG" ;;
+    c) VAR3="opt $OPTARG" ;;
+    *) echo $USAGE; exit 2
+esac
+done
+
+# Remove the options from the argument list
+shift $((OPTIND -1))
+
