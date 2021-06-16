@@ -1,13 +1,10 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------
-# Maintainer:   Peter Saville   
+# Maintainer:   Peter Saville       Created: <date>
 # Contact:      
 # 
 # Description:
 #
-# Change Log:
-# Created: <date>
-# Modified: 
 # ------------------------------------------------------------------------------
 
 VERSION=0.0.0
